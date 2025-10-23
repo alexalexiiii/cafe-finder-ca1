@@ -1,7 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- Base application theme -->
     <style name="Base.Theme.Placemark" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Use your card palette for primary and text colors -->
+        <item name="colorPrimary">@color/cardBackground</item>
+        <item name="colorPrimaryVariant">@color/cardBackground</item>
+        <item name="colorOnPrimary">@color/cardTextPrimary</item>
+
+        <item name="colorSecondary">@color/cardBackground</item>
+        <item name="colorOnSecondary">@color/cardTextSecondary</item>
+
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
+
+    <!-- App theme -->
+    <style name="Theme.Placemark" parent="Base.Theme.Placemark" />
 </resources>

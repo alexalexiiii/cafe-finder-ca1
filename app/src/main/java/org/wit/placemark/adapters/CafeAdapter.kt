@@ -3,6 +3,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.placemark.models.CafeModel
+import org.wit.placemark.databinding.CardCafeBinding
+import android.net.Uri
+import org.wit.placemark.R
 
 interface CafeListener {
     fun onCafeClick(cafe: CafeModel)
@@ -20,7 +23,7 @@ class CafeAdapter(private var cafes: List<CafeModel>,
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val cafe = cafes[holder.adapterPosition]
-        holder.bind(cafes, listener)
+        holder.bind(cafe, listener)
     }
 
     override fun getItemCount(): Int = cafes.size
@@ -28,7 +31,7 @@ class CafeAdapter(private var cafes: List<CafeModel>,
     class MainHolder(private val binding: CardCafeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(cafe: List<CafeModel>, listener: CafeListener) {
+        fun bind(cafe: CafeModel, listener: CafeListener) {
 
             binding.cafeName.text = cafe.name
             binding.cafeFavourite.text = "Favourite: ${cafe.favouriteMenuItem}"
@@ -38,11 +41,11 @@ class CafeAdapter(private var cafes: List<CafeModel>,
             if (cafe.image.isNotEmpty()) {
                 binding.cafeImage.setImageURI(Uri.parse(cafe.image))
             } else {
-                binding.cafeImage.setImageResource(R.drawable.ic_placeholder) // fallback image
+                binding.cafeImage.setImageResource(R.drawable.nycd) // fallback image
             }
 
             // Handle click
-            binding.root.setOnClickListener { listener.onPlacemarkClick(cafe) }
+            binding.root.setOnClickListener { listener.onCafeClick(cafe) }
         }
-
     }
+}

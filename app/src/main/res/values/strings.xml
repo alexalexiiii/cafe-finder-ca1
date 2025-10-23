@@ -1,11 +1,21 @@
 <resources>
+    <!-- App name -->
     <string name="app_name">Coffee Journal</string>
+
+    <!-- Form hints -->
     <string name="cafe_name_hint">Café Name</string>
     <string name="favourite_item_hint">Favourite Menu Item</string>
     <string name="location_hint">Location</string>
     <string name="choose_image">Choose Image</string>
     <string name="save_cafe">Save Café</string>
+
+    <!-- Validation -->
     <string name="please_enter_name">Please enter a café name</string>
+
+    <!-- Search -->
     <string name="search_hint">Search cafés...</string>
-    <string name="cancel">Cancel</string>
+
+    <!-- Menu / Toolbar actions -->
+    <string name="menu_addCafe">Add Café</string>
+    <string name="menu_cancelCafe">Cancel</string>
 </resources>
