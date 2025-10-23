@@ -1,8 +1,11 @@
 <resources>
-    <string name="app_name">Placemark</string>
-    <string name="button_addPlacemark">Add Placemark</string>
-    <string name="hint_placemarkTitle">Placemark Title</string>
-    <string name="hint_placemarkDescription">Description </string>
-    <string name="menu_addPlacemark">Add</string>
-    <string name="menu_cancelPlacemark">Cancel</string>
+    <string name="app_name">Coffee Journal</string>
+    <string name="cafe_name_hint">Café Name</string>
+    <string name="favourite_item_hint">Favourite Menu Item</string>
+    <string name="location_hint">Location</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="save_cafe">Save Café</string>
+    <string name="please_enter_name">Please enter a café name</string>
+    <string name="search_hint">Search cafés...</string>
+    <string name="cancel">Cancel</string>
 </resources>
