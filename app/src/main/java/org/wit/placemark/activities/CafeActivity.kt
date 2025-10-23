@@ -11,7 +11,7 @@ import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.PlacemarkModel
 import timber.log.Timber.i
 
-class PlacemarkActivity : AppCompatActivity() {
+class CafeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlacemarkBinding
     var placemark = PlacemarkModel()
