@@ -28,9 +28,9 @@ class PlacemarkActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        i("Placemark Activity started...")
+        i("Creating new Cafe entry...")
 
-        if (intent.hasExtra("placemark_edit")) {
+        if (intent.hasExtra("cafe_edit")) {
             //Note on minsdk 33+ the following type safe call is
             /*
             placemark = intent.getParcelableExtra("placemark_edit",
