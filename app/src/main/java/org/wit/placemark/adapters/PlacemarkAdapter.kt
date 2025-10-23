@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.placemark.databinding.CardPlacemarkBinding
 
-interface PlacemarkListener {
+interface CafeListener {
     fun onPlacemarkClick(placemark: PlacemarkModel)
 }
 
