@@ -11,4 +11,5 @@
 
     <!-- Misc -->
     <color name="gray">#BDBDBD</color>
+    <color name="cream_surface">#DEC7AC</color>
 </resources>

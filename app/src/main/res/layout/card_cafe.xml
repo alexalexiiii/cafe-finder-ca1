@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:elevation="4dp"
+    android:elevation="5dp"
     app:cardCornerRadius="12dp"
-    app:cardBackgroundColor="@color/cardBackground">
+    app:cardBackgroundColor="@color/cream_surface">
 
     <LinearLayout
         android:orientation="vertical"
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Top row: name + delete -->
+        <!-- Header row: Café name + delete button -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -23,6 +23,7 @@
             android:gravity="center_vertical"
             android:baselineAligned="false">
 
+            <!-- Café name -->
             <TextView
                 android:id="@+id/cafeName"
                 android:textStyle="bold"
@@ -32,7 +33,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-                android:ellipsize="end" />
+                android:ellipsize="end"
+                android:textAlignment="textStart" />
 
             <!-- 🗑 Delete button -->
             <ImageButton
@@ -42,20 +44,24 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_delete"
                 android:contentDescription="@string/delete_cafe"
-                android:tint="@color/cardTextPrimary"
+                app:tint="@color/coffee_brown"
                 android:padding="8dp" />
         </LinearLayout>
 
+        <!-- Details -->
         <TextView
             android:id="@+id/cafeFavourite"
             android:textColor="@color/cardTextSecondary"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp" />
+            android:layout_marginTop="4dp"
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/cafeRating"
             android:textColor="@color/cardTextSecondary"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp" />
@@ -63,17 +69,20 @@
         <TextView
             android:id="@+id/cafeLocation"
             android:textColor="@color/cardTextSecondary"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp" />
 
+        <!-- Café image -->
         <ImageView
             android:id="@+id/cafeImage"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/nycd"
-            android:background="@drawable/image_border" />
+            android:background="@drawable/image_border"
+            android:contentDescription="Café image" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

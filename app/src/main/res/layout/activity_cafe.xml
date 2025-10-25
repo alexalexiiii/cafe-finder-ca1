@@ -4,16 +4,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground">
+    android:background="@color/cream_background">
 
     <!-- Top App Bar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbarAdd"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="@android:color/white"
+        android:background="@color/coffee_brown"
+        app:titleTextColor="@color/white"
         app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/white"
         app:title="Add Café" />
 
     <!-- Scrollable form -->
@@ -33,36 +34,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Café Name"
-                app:boxStrokeColor="@color/teal_700">
+                app:boxStrokeColor="@color/coffee_brown"
+                app:hintTextColor="@color/cardTextSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/cafeName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cardTextPrimary"
+                    android:textColorHint="@color/cardTextSecondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Favourite Menu Item -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Favourite Menu Item">
+                android:hint="Favourite Menu Item"
+                app:boxStrokeColor="@color/latte_brown"
+                app:hintTextColor="@color/cardTextSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/favouriteItem"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cardTextPrimary"
+                    android:textColorHint="@color/cardTextSecondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Location -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Location">
+                android:hint="Location"
+                app:boxStrokeColor="@color/latte_brown"
+                app:hintTextColor="@color/cardTextSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/location"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cardTextPrimary"
+                    android:textColorHint="@color/cardTextSecondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Rating -->
@@ -75,6 +87,7 @@
 
                 <TextView
                     android:text="Rating:"
+                    android:textColor="@color/cardTextPrimary"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -103,10 +116,12 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/chooseImage"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:text="Choose Image"
+                android:text="@string/choose_image"
                 app:icon="@drawable/ic_photo"
                 app:iconPadding="8dp"
                 app:iconGravity="textStart"
+                android:textColor="@color/coffee_brown"
+                app:strokeColor="@color/coffee_brown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp" />
@@ -114,7 +129,9 @@
             <!-- Save Café Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAdd"
-                android:text="Save Café"
+                android:text="@string/save_cafe"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/coffee_brown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
