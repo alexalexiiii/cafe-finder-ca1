@@ -63,6 +63,18 @@ class CafeJsonStoreTest {
         val allCafes = store.findAll()
         assertTrue(allCafes.isEmpty())
     }
+    @Test
+    fun testPersistenceAcrossInstances() {
+        val cafe = CafeModel(name = "Persisted Cafe", favouriteMenuItem = "Americano", location = "Limerick", rating = 5)
+        store.create(cafe)
+
+        //  new store instance, should load from file
+        val newStore = CafeJsonStore(context)
+        val allCafes = newStore.findAll()
+
+        assertEquals(1, allCafes.size)
+        assertEquals("Persisted Cafe", allCafes[0].name)
+    }
 }
 
 
