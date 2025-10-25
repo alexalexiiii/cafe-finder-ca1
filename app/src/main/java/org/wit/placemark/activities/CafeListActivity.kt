@@ -14,12 +14,26 @@ import org.wit.placemark.databinding.ActivityCafeListBinding
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.CafeModel
 
+/**
+ * CafeListActivity
+ * ----------------
+ * This activity displays all café entries using a RecyclerView.
+ * Users can:
+ * - View all cafés in a scrollable list
+ * - Search/filter cafés by name or location
+ * - Add new cafés via the toolbar
+ * - Edit or delete existing cafés via item click
+ *
+ * Implements the CafeListener interface to handle list item actions.
+ */
+
 class CafeListActivity : AppCompatActivity(), CafeListener {
 
     private lateinit var binding: ActivityCafeListBinding
     lateinit var app: MainApp
     private lateinit var adapter: CafeAdapter
 
+    // called when cafe activity is initiated
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCafeListBinding.inflate(layoutInflater)
@@ -35,6 +49,7 @@ class CafeListActivity : AppCompatActivity(), CafeListener {
 
 
         // SearchView filter
+        // live filtering by cafe name or location
         binding.cafeSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = false
 
@@ -73,6 +88,8 @@ class CafeListActivity : AppCompatActivity(), CafeListener {
         startActivity(intent)
     }
 
+    // handling cafe deletion from the cafe card
+    // displays message to confirm using snackbar
     override fun onCafeDeleteClick(cafe: CafeModel) {
         MaterialAlertDialogBuilder(this)
             .setTitle("Delete Café")
@@ -86,6 +103,7 @@ class CafeListActivity : AppCompatActivity(), CafeListener {
             .show()
     }
 
+    // Utility function to refresh the RecyclerView after changes (delete or edit)
     private fun loadCafes() {
         val cafes = app.cafes.findAll()
         adapter.updateList(cafes)
