@@ -97,9 +97,16 @@
                     android:id="@+id/ratingBar"
                     android:numStars="5"
                     android:stepSize="1"
-                    style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:isIndicator="false"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:scaleX="1.4"
+                    android:scaleY="1.4"
+                    android:progressTint="@color/coffee_brown"
+                    android:secondaryProgressTint="@color/latte_brown"
+                    android:progressBackgroundTint="@color/gray" />
             </LinearLayout>
 
             <!-- Image Preview -->

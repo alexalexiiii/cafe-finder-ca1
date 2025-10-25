@@ -1,22 +1,29 @@
 package org.wit.placemark.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityCafeBinding
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.CafeModel
 import timber.log.Timber.i
+import androidx.core.net.toUri
 
 class CafeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCafeBinding
-    private var cafe = CafeModel()
     private lateinit var app: MainApp
+    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    private var cafe = CafeModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,17 +33,23 @@ class CafeActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbarAdd)
 
         app = application as MainApp
-        i("Creating new Cafe entry...")
+        i("CafeActivity started")
 
+        // Edit mode
         if (intent.hasExtra("cafe_edit")) {
             cafe = intent.extras?.getParcelable("cafe_edit")!!
             binding.cafeName.setText(cafe.name)
             binding.favouriteItem.setText(cafe.favouriteMenuItem)
             binding.location.setText(cafe.location)
             binding.ratingBar.rating = cafe.rating.toFloat()
-            if (cafe.image.isNotEmpty()) binding.cafeImage.setImageURI(Uri.parse(cafe.image))
+
+            if (cafe.image.isNotEmpty()) {
+                binding.cafeImage.setImageURI(cafe.image.toUri())
+                binding.chooseImage.text = getString(R.string.change_image)
+            }
         }
 
+        // Save Café
         binding.btnAdd.setOnClickListener { view ->
             cafe.name = binding.cafeName.text.toString()
             cafe.favouriteMenuItem = binding.favouriteItem.text.toString()
@@ -47,15 +60,40 @@ class CafeActivity : AppCompatActivity() {
                 if (intent.hasExtra("cafe_edit")) app.cafes.update(cafe.copy())
                 else app.cafes.create(cafe.copy())
 
-                i("Add/Edit Button Pressed: $cafe")
+                i("Saved Cafe: $cafe")
                 setResult(RESULT_OK)
                 finish()
             } else {
-                Snackbar.make(view, "Please enter a café name", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(view, R.string.please_enter_name, Snackbar.LENGTH_LONG).show()
             }
         }
+
+        // Choose Image button
+        binding.chooseImage.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            imageIntentLauncher.launch(intent)
+        }
+
+        registerImagePickerCallback()
     }
 
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val imageUri = result.data!!.data
+                    if (imageUri != null) {
+                        i("Image selected: $imageUri")
+                        cafe.image = imageUri.toString()
+                        binding.cafeImage.setImageURI(imageUri)
+                        binding.chooseImage.text = getString(R.string.change_image)
+                    }
+                }
+            }
+    }
+
+    // Toolbar Menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -69,10 +107,9 @@ class CafeActivity : AppCompatActivity() {
             }
             R.id.item_delete -> {
                 if (intent.hasExtra("cafe_edit")) {
-                    // Confirmation dialog
-                    com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                    MaterialAlertDialogBuilder(this)
                         .setTitle("Delete Café")
-                        .setMessage("You will now delete '${cafe.name}', are you sure?")
+                        .setMessage("You will now delete '${cafe.name}'. Are you sure?")
                         .setPositiveButton("Delete") { _, _ ->
                             app.cafes.delete(cafe)
                             i("Deleted: $cafe")
@@ -89,5 +126,4 @@ class CafeActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 }

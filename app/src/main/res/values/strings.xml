@@ -21,5 +21,6 @@
     <string name="menu_deleteCafe">Delete Café</string>
 
     <!-- Card action (for delete button on each café card) -->
-    <string name="delete_cafe">Delete Café</string>  <!-- ✅ Added -->
+    <string name="delete_cafe">Delete Café</string>
+    <string name="change_image">Change Image</string>
 </resources>
