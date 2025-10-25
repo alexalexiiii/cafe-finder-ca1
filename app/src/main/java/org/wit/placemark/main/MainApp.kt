@@ -17,7 +17,5 @@ class MainApp : Application() {
 
         // instantiate JSON store with context
         cafes = CafeJsonStore(applicationContext)
-
-        i("Café tracker started with JSONStore")
     }
 }

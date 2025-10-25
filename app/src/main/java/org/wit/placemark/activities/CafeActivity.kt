@@ -90,7 +90,7 @@ class CafeActivity : AppCompatActivity() {
         }
 
         // Choose Image button
-        //opens sys inage picker
+        //opens sys image picker
         binding.chooseImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
