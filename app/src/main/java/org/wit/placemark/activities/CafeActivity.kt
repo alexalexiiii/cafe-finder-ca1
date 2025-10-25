@@ -18,16 +18,35 @@ import org.wit.placemark.models.CafeModel
 import timber.log.Timber.i
 import androidx.core.net.toUri
 
+/**
+ * CafeActivity
+ * -------------
+ * This activity allows the user to create, edit, and delete Café journal entries.
+ * Each café includes name, favourite item, location, rating, and an image.
+ * It demonstrates key Android app components such as:
+ * - ViewBinding
+ * - ActivityResultLauncher for image selection
+ * - Data persistence via MainApp reference
+ * - Material Design components (Snackbar, AlertDialog)
+ */
 class CafeActivity : AppCompatActivity() {
-
+// viewbinding obj for layout access
     private lateinit var binding: ActivityCafeBinding
+    // ref to main application (data access)
     private lateinit var app: MainApp
+
+    // used to launch the image picker and handle returned image url
+
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+
+    // this is the model that is  representing the café being created or edited
     private var cafe = CafeModel()
 
+    // called when activity is first initiated
+    // sets up viewbinding, toolbar and logic for edit mode/new entry creation
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        // Inflate layout via ViewBinding and set as content view
         binding = ActivityCafeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbarAdd)
