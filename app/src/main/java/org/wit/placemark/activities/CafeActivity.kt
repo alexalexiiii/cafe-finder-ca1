@@ -50,11 +50,12 @@ class CafeActivity : AppCompatActivity() {
         binding = ActivityCafeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbarAdd)
-
+        // Get reference to the global MainApp for data storage
         app = application as MainApp
         i("CafeActivity started")
 
         // Edit mode
+        // logic: if an existing café was passed via intent extras, populate the UI fields for editing
         if (intent.hasExtra("cafe_edit")) {
             cafe = intent.extras?.getParcelable("cafe_edit")!!
             binding.cafeName.setText(cafe.name)
@@ -69,12 +70,13 @@ class CafeActivity : AppCompatActivity() {
         }
 
         // Save Café
+        // logic: an existing café was passed via intent extras, populate the UI fields for editing
         binding.btnAdd.setOnClickListener { view ->
             cafe.name = binding.cafeName.text.toString()
             cafe.favouriteMenuItem = binding.favouriteItem.text.toString()
             cafe.location = binding.location.text.toString()
             cafe.rating = binding.ratingBar.rating.toInt()
-
+            // validation: requires non-empty name
             if (cafe.name.isNotEmpty()) {
                 if (intent.hasExtra("cafe_edit")) app.cafes.update(cafe.copy())
                 else app.cafes.create(cafe.copy())
@@ -88,6 +90,7 @@ class CafeActivity : AppCompatActivity() {
         }
 
         // Choose Image button
+        //opens sys inage picker
         binding.chooseImage.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -97,6 +100,8 @@ class CafeActivity : AppCompatActivity() {
         registerImagePickerCallback()
     }
 
+    //  this handles the result of the image picker.
+    //  stores the image URI in the model and updates the preview in the layout.
     private fun registerImagePickerCallback() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -113,11 +118,14 @@ class CafeActivity : AppCompatActivity() {
     }
 
     // Toolbar Menu
+    // inflates toolbar menu options
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    // cancel closes activity
+    // delete deletes cafe if in edit mode
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_cancel -> {
