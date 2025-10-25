@@ -1,28 +1,29 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- 🎨 Base app theme -->
-    <style name="Base.Theme.CafeTheme" parent="Theme.Material3.DayNight.NoActionBar">
+    <!-- The base Café Theme using Material Components -->
+    <style name="Base.Theme.CafeTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
+        <!-- Primary brand colors -->
         <item name="colorPrimary">@color/coffee_brown</item>
+        <item name="colorPrimaryDark">@color/coffee_brown</item>
         <item name="colorOnPrimary">@color/white</item>
 
+        <!-- Secondary / accent colors -->
         <item name="colorSecondary">@color/latte_brown</item>
         <item name="colorOnSecondary">@color/white</item>
 
+        <!-- Background -->
         <item name="android:windowBackground">@color/cream_background</item>
         <item name="android:colorBackground">@color/cream_background</item>
-        <item name="colorSurface">@color/cream_surface</item>
-        <item name="colorOnSurface">@color/dark_text</item>
 
+        <!-- Toolbar -->
+        <item name="android:toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
 
+        <!-- Status bar -->
         <item name="android:statusBarColor">@color/coffee_brown</item>
-        <item name="android:navigationBarColor">@color/coffee_brown</item>
-
-        <!-- ✅ Material 3 overrides -->
-        <item name="materialToolbarStyle">@style/Widget.Material3.Toolbar</item>
     </style>
 
-    <!-- 🌼 Your app theme -->
+    <!-- cafe theme -->
     <style name="Theme.CafeTheme" parent="Base.Theme.CafeTheme" />
 
 </resources>

@@ -1,19 +1,29 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme -->
-    <style name="Base.Theme.Placemark" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Use your card palette for primary and text colors -->
-        <item name="colorPrimary">@color/cardBackground</item>
-        <item name="colorPrimaryVariant">@color/cardBackground</item>
-        <item name="colorOnPrimary">@color/cardTextPrimary</item>
+    <!-- The base Café Theme using Material Components -->
+    <style name="Base.Theme.CafeTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
-        <item name="colorSecondary">@color/cardBackground</item>
-        <item name="colorOnSecondary">@color/cardTextSecondary</item>
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">@color/coffee_brown</item>
+        <item name="colorPrimaryDark">@color/coffee_brown</item>
+        <item name="colorOnPrimary">@color/white</item>
 
-        <!-- Status bar color -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Secondary / accent colors -->
+        <item name="colorSecondary">@color/latte_brown</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Background -->
+        <item name="android:windowBackground">@color/cream_background</item>
+        <item name="android:colorBackground">@color/cream_background</item>
+
+        <!-- Toolbar -->
+        <item name="android:toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/coffee_brown</item>
     </style>
 
-    <!-- App theme -->
-    <style name="Theme.Placemark" parent="Base.Theme.Placemark" />
+    <!-- cafe theme -->
+    <style name="Theme.CafeTheme" parent="Base.Theme.CafeTheme" />
+
 </resources>
