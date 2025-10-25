@@ -38,4 +38,9 @@ class CafeMemStore : CafeStore {
     private fun logAll() {
         cafes.forEach { i("$it") }
     }
+
+    override fun delete(cafe: CafeModel) {
+        cafes.remove(cafe)
+    }
+
 }

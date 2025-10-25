@@ -1,19 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme -->
+    <!-- 🎨 Base app theme -->
     <style name="Base.Theme.CafeTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Use your card palette for primary and text colors -->
-        <item name="colorPrimary">@color/cardBackground</item>
-        <item name="colorPrimaryVariant">@color/cardBackground</item>
-        <item name="colorOnPrimary">@color/cardTextPrimary</item>
 
-        <item name="colorSecondary">@color/cardBackground</item>
-        <item name="colorOnSecondary">@color/cardTextSecondary</item>
+        <item name="colorPrimary">@color/coffee_brown</item>
+        <item name="colorOnPrimary">@color/white</item>
 
-        <!-- Status bar color -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="colorSecondary">@color/latte_brown</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="android:windowBackground">@color/cream_background</item>
+        <item name="android:colorBackground">@color/cream_background</item>
+        <item name="colorSurface">@color/cream_surface</item>
+        <item name="colorOnSurface">@color/dark_text</item>
+
+
+        <item name="android:statusBarColor">@color/coffee_brown</item>
+        <item name="android:navigationBarColor">@color/coffee_brown</item>
+
+        <!-- ✅ Material 3 overrides -->
+        <item name="materialToolbarStyle">@style/Widget.Material3.Toolbar</item>
     </style>
 
-    <!-- App theme -->
+    <!-- 🌼 Your app theme -->
     <style name="Theme.CafeTheme" parent="Base.Theme.CafeTheme" />
+
 </resources>

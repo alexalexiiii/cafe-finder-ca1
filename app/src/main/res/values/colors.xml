@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="cardBackground">#FFF8E1</color>       <!-- light beige -->
-    <color name="cardTextPrimary">#3E2723</color>      <!-- dark brown -->
-    <color name="cardTextSecondary">#6D4C41</color>    <!-- medium brown -->
+    <!-- Cafe pallete -->
+    <color name="coffee_brown">#6D4C41</color>       <!-- Toolbar / buttons -->
+    <color name="latte_brown">#A1887F</color>        <!-- Accents -->
+    <color name="cream_background">#FFF8E1</color>   <!-- Background -->
+    <color name="cream_surface">#FFECB3</color>      <!-- Cards -->
+    <color name="dark_text">#3E2723</color>          <!-- Primary text -->
+    <color name="medium_text">#6D4C41</color>        <!-- Secondary text -->
+    <color name="white">#FFFFFF</color>
+
+    <!-- Existing (still used) -->
+    <color name="cardBackground">#FFF8E1</color>
+    <color name="cardTextPrimary">#3E2723</color>
+    <color name="cardTextSecondary">#6D4C41</color>
+    <color name="gray">#BDBDBD</color>
 </resources>
+

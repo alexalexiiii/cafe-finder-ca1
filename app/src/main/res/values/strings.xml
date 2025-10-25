@@ -18,4 +18,8 @@
     <!-- Menu / Toolbar actions -->
     <string name="menu_addCafe">Add Café</string>
     <string name="menu_cancelCafe">Cancel</string>
+    <string name="menu_deleteCafe">Delete Café</string>
+
+    <!-- Card action (for delete button on each café card) -->
+    <string name="delete_cafe">Delete Café</string>  <!-- ✅ Added -->
 </resources>

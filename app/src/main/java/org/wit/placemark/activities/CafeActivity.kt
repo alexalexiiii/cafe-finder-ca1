@@ -57,14 +57,37 @@ class CafeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_cafe, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_cancel -> finish()
+        return when (item.itemId) {
+            R.id.item_cancel -> {
+                finish()
+                true
+            }
+            R.id.item_delete -> {
+                if (intent.hasExtra("cafe_edit")) {
+                    // Confirmation dialog
+                    com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                        .setTitle("Delete Café")
+                        .setMessage("You will now delete '${cafe.name}', are you sure?")
+                        .setPositiveButton("Delete") { _, _ ->
+                            app.cafes.delete(cafe)
+                            i("Deleted: $cafe")
+                            setResult(RESULT_OK)
+                            finish()
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
+                } else {
+                    Snackbar.make(binding.root, "Nothing to delete", Snackbar.LENGTH_SHORT).show()
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
+
 }

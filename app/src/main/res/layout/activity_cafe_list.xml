@@ -3,7 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <SearchView
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="@color/cardTextPrimary"/>
+
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/cafeSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

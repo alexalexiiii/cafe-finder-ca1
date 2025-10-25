@@ -1,59 +1,94 @@
 package org.wit.placemark.activities
-import android.app.Activity
-import android.app.Activity.RESULT_OK
+import androidx.appcompat.widget.SearchView
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.wit.placemark.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import org.wit.placemark.adapters.CafeAdapter
 import org.wit.placemark.adapters.CafeListener
-import org.wit.placemark.databinding.ActivityCafeBinding
+import org.wit.placemark.databinding.ActivityCafeListBinding
 import org.wit.placemark.main.MainApp
+import org.wit.placemark.models.CafeModel
 
- class CafeListActivity : AppCompatActivity(), CafeListener {
-     lateinit var app: MainApp
-     private lateinit var binding: ActivityCafeBinding
+class CafeListActivity : AppCompatActivity(), CafeListener {
 
-     override fun onCreate(savedInstanceState: Bundle?) {
-         super.onCreate(savedInstanceState)
-         binding = ActivityCafeBinding.inflate(layoutInflater)
-         setContentView(binding.root)
-         binding.toolbar.title = title
-         setSupportActionBar(binding.toolbar)
+    private lateinit var binding: ActivityCafeListBinding
+    lateinit var app: MainApp
+    private lateinit var adapter: CafeAdapter
 
-         app = application as MainApp
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityCafeListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-         val layoutManager = LinearLayoutManager(this)
-         binding.recyclerView.layoutManager = layoutManager
-         binding.recyclerView.adapter = CafeAdapter(app.cafes.findAll(),this)
-     }
+        setSupportActionBar(binding.toolbar)
+        app = application as MainApp
 
-     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-         menuInflater.inflate(R.menu.menu_main, menu)
-         return super.onCreateOptionsMenu(menu)
-     }}
+        // RecyclerView setup
+        adapter = CafeAdapter(app.cafes.findAll(), this)
+        binding.recyclerViewCafes.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewCafes.adapter = adapter
 
-override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-        R.id.item_add -> {
-            val launcherIntent = Intent(this, CafeActivity::class.java)
-            getResult.launch(launcherIntent)
-        }
+
+        // SearchView filter
+        binding.cafeSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filtered = app.cafes.findAll().filter {
+                    it.name.contains(newText ?: "", ignoreCase = true) ||
+                            it.location.contains(newText ?: "", ignoreCase = true)
+                }
+                adapter.updateList(filtered)
+                return true
+            }
+        })
     }
-    return super.onOptionsItemSelected(item)
+
+    // Inflate menu
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(org.wit.placemark.R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    // Handle menu clicks
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            org.wit.placemark.R.id.item_add -> {
+                val intent = Intent(this, CafeActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    // Handle clicks from RecyclerView items
+    override fun onCafeClick(cafe: CafeModel) {
+        val intent = Intent(this, CafeActivity::class.java)
+        intent.putExtra("cafe_edit", cafe)
+        startActivity(intent)
+    }
+
+    override fun onCafeDeleteClick(cafe: CafeModel) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Delete Café")
+            .setMessage("Are you sure you want to delete '${cafe.name}'?")
+            .setPositiveButton("Delete") { _, _ ->
+                (application as MainApp).cafes.delete(cafe)
+                loadCafes() // refresh the RecyclerView
+                Snackbar.make(findViewById(android.R.id.content), "Deleted ${cafe.name}", Snackbar.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun loadCafes() {
+        val cafes = app.cafes.findAll()
+        adapter.updateList(cafes)
+    }
+
 }
-
-private val getResult =
-    registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == RESULT_OK) {
-            (binding.recyclerView.adapter)?.
-            notifyItemRangeChanged(0,app.placemarks.findAll().size)
-        }
-    }
-
