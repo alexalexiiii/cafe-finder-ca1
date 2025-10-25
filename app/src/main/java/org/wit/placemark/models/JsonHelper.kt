@@ -1,7 +1,5 @@
 package org.wit.placemark.models
 
-package org.wit.placemark.models
-
 import android.content.Context
 import java.io.File
 

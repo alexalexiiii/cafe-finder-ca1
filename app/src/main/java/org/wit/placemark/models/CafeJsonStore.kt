@@ -6,12 +6,13 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import timber.log.Timber
 import java.util.UUID
+import java.util.UUID.*
 
 const val JSON_FILE = "cafes.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
 val listType = object : TypeToken<ArrayList<CafeModel>>() {}.type
 
-class CafeJSONStore(private val context: Context) : CafeStore {
+class CafeJsonStore(private val context: Context) : CafeStore {
 
     private var cafes = mutableListOf<CafeModel>()
 
@@ -24,10 +25,15 @@ class CafeJSONStore(private val context: Context) : CafeStore {
     override fun findAll(): List<CafeModel> = cafes
 
     override fun create(cafe: CafeModel) {
-        cafe.id = UUID.randomUUID().toString()
+        cafe.id = generateRandomId()
         cafes.add(cafe)
         serialize()
     }
+
+    private fun generateRandomId(): Long {
+        return System.currentTimeMillis()
+    }
+
 
     override fun update(cafe: CafeModel) {
         val foundCafe = cafes.find { it.id == cafe.id }
