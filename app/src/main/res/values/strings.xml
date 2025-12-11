@@ -6,7 +6,9 @@
     <string name="cafe_name_hint">Café Name</string>
     <string name="favourite_item_hint">Favourite Menu Item</string>
     <string name="location_hint">Location</string>
+    <string name="button_location">Set Location</string>
     <string name="choose_image">Choose Image</string>
+    <string name="returning_or_no">Returning?</string>
     <string name="save_cafe">Save Café</string>
 
     <!-- Validation -->

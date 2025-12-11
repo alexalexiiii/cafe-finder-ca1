@@ -9,5 +9,6 @@ data class CafeModel( var id: Long = 0,
                       var favouriteMenuItem: String = "",
                       var rating: Int = 0,
                       var location: String = "",
-                      var image: String = ""
+                      var image: String = "",
+                      var isReturning: Boolean = false
 ) : Parcelable

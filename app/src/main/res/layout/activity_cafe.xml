@@ -61,23 +61,22 @@
                     android:textColorHint="@color/cardTextSecondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Location -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Location"
-                app:boxStrokeColor="@color/latte_brown"
-                app:hintTextColor="@color/cardTextSecondary">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/cardTextPrimary"
-                    android:textColorHint="@color/cardTextSecondary" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <!--- Set Location Button -->
 
             <!-- Rating -->
+
+            <Button
+                android:id="@+id/placemarkLocation"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="16dp"
+                android:background="@color/latte_brown"
+                android:padding="8dp"
+                android:stateListAnimator="@null"
+                android:text="@string/location_hint"
+                android:textColor="@color/cardTextPrimary"
+                android:textSize="16sp" />
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
@@ -85,13 +84,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:text="Rating:"
-                    android:textColor="@color/cardTextPrimary"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp" />
 
                 <RatingBar
                     android:id="@+id/ratingBar"
@@ -102,12 +94,21 @@
                     android:isIndicator="false"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:layout_marginStart="65dp"
                     android:scaleX="1.4"
                     android:scaleY="1.4"
                     android:progressTint="@color/coffee_brown"
                     android:secondaryProgressTint="@color/latte_brown"
                     android:progressBackgroundTint="@color/gray" />
             </LinearLayout>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/returningSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Worth returning?"
+                android:checked="false"
+                android:layout_marginTop="12dp"/>
 
             <!-- Image Preview -->
             <ImageView
@@ -136,12 +137,12 @@
             <!-- Save Café Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAdd"
-                android:text="@string/save_cafe"
-                android:textColor="@color/white"
-                app:backgroundTint="@color/coffee_brown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:text="@string/save_cafe"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/coffee_brown"
                 app:cornerRadius="12dp" />
 
         </LinearLayout>

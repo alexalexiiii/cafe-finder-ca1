@@ -4,7 +4,6 @@ import android.app.Application
 import org.wit.placemark.models.CafeStore
 import org.wit.placemark.models.CafeJsonStore
 import timber.log.Timber
-import timber.log.Timber.i
 
 class MainApp : Application() {
 
