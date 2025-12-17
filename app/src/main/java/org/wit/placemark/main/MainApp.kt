@@ -3,6 +3,8 @@ package org.wit.placemark.main
 import android.app.Application
 import org.wit.placemark.models.CafeStore
 import org.wit.placemark.models.CafeJsonStore
+import org.wit.placemark.models.UserModel
+
 import timber.log.Timber
 
 class MainApp : Application() {
