@@ -1,13 +1,17 @@
 package org.wit.placemark.activities
+
 import androidx.appcompat.widget.SearchView
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import org.wit.placemark.R
 import org.wit.placemark.adapters.CafeAdapter
 import org.wit.placemark.adapters.CafeListener
 import org.wit.placemark.databinding.ActivityCafeListBinding
@@ -21,8 +25,8 @@ import org.wit.placemark.models.CafeModel
  * Users can:
  * - View all cafés in a scrollable list
  * - Search/filter cafés by name or location
- * - Add new cafés via the toolbar
- * - Edit or delete existing cafés via item click
+ * - Delete ALL cafés via toolbar button
+ * - Edit or delete individual cafés
  *
  * Implements the CafeListener interface to handle list item actions.
  */
@@ -33,7 +37,6 @@ class CafeListActivity : AppCompatActivity(), CafeListener {
     lateinit var app: MainApp
     private lateinit var adapter: CafeAdapter
 
-    // called when cafe activity is initiated
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCafeListBinding.inflate(layoutInflater)
@@ -47,16 +50,14 @@ class CafeListActivity : AppCompatActivity(), CafeListener {
         binding.recyclerViewCafes.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewCafes.adapter = adapter
 
-
-        // SearchView filter
-        // live filtering by cafe name or location
+        // Search filter
         binding.cafeSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = false
+            override fun onQueryTextSubmit(query: String?) = false
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 val filtered = app.cafes.findAll().filter {
-                    it.name.contains(newText ?: "", ignoreCase = true) ||
-                            it.location.contains(newText ?: "", ignoreCase = true)
+                    it.name.contains(newText ?: "", true) ||
+                            it.location.contains(newText ?: "", true)
                 }
                 adapter.updateList(filtered)
                 return true
@@ -64,49 +65,64 @@ class CafeListActivity : AppCompatActivity(), CafeListener {
         })
     }
 
-    // Inflate menu
+    // Inflate toolbar menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(org.wit.placemark.R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
     }
 
-    // Handle menu clicks
+    // Handle toolbar actions
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            org.wit.placemark.R.id.item_add -> {
-                val intent = Intent(this, CafeActivity::class.java)
-                startActivity(intent)
+        return when (item.itemId) {
+
+            R.id.item_delete_all -> {
+                confirmDeleteAll()
+                true
             }
+
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
-    // Handle clicks from RecyclerView items
-    override fun onCafeClick(cafe: CafeModel) {
-        val intent = Intent(this, CafeActivity::class.java)
-        intent.putExtra("cafe_edit", cafe)
-        startActivity(intent)
-    }
+    // Confirm delete ALL cafés
+    private fun confirmDeleteAll() {
+        if (app.cafes.findAll().isEmpty()) {
+            Snackbar.make(binding.root, "No cafés to delete", Snackbar.LENGTH_SHORT).show()
+            return
+        }
 
-    // handling cafe deletion from the cafe card
-    // displays message to confirm using snackbar
-    override fun onCafeDeleteClick(cafe: CafeModel) {
         MaterialAlertDialogBuilder(this)
-            .setTitle("Delete Café")
-            .setMessage("Are you sure you want to delete '${cafe.name}'?")
-            .setPositiveButton("Delete") { _, _ ->
-                (application as MainApp).cafes.delete(cafe)
-                loadCafes() // refresh the RecyclerView
-                Snackbar.make(findViewById(android.R.id.content), "Deleted ${cafe.name}", Snackbar.LENGTH_SHORT).show()
+            .setTitle("Delete All Cafés")
+            .setMessage("This will permanently delete ALL cafés. Are you sure?")
+            .setPositiveButton("Delete All") { _, _ ->
+                app.cafes.findAll().toList().forEach {
+                    app.cafes.delete(it)
+                }
+                adapter.updateList(emptyList())
+                Snackbar.make(binding.root, "All cafés deleted", Snackbar.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancel", null)
             .show()
     }
 
-    // Utility function to refresh the RecyclerView after changes (delete or edit)
-    private fun loadCafes() {
-        val cafes = app.cafes.findAll()
-        adapter.updateList(cafes)
+    // Recycler item click → edit café
+    override fun onCafeClick(cafe: CafeModel) {
+        val intent = android.content.Intent(this, CafeActivity::class.java)
+        intent.putExtra("cafe_edit", cafe)
+        startActivity(intent)
     }
 
+    // Individual delete
+    override fun onCafeDeleteClick(cafe: CafeModel) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Delete Café")
+            .setMessage("Delete '${cafe.name}'?")
+            .setPositiveButton("Delete") { _, _ ->
+                app.cafes.delete(cafe)
+                adapter.updateList(app.cafes.findAll())
+                Snackbar.make(binding.root, "Deleted ${cafe.name}", Snackbar.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
 }

@@ -43,13 +43,15 @@ class CafeActivity : AppCompatActivity() {
         app = application as MainApp
         i("CafeActivity started")
 
-        // Edit mode
+        // ---------------- EDIT MODE ----------------
         if (intent.hasExtra("cafe_edit")) {
             cafe = intent.extras?.getParcelable("cafe_edit")!!
+
             binding.cafeName.setText(cafe.name)
             binding.favouriteItem.setText(cafe.favouriteMenuItem)
             binding.locationText.setText(cafe.location)
             binding.ratingBar.rating = cafe.rating.toFloat()
+            binding.returningSwitch.isChecked = cafe.returning
 
             if (cafe.image.isNotEmpty()) {
                 binding.cafeImage.setImageURI(cafe.image.toUri())
@@ -57,17 +59,20 @@ class CafeActivity : AppCompatActivity() {
             }
         }
 
-        // Save Café
+        // ---------------- SAVE CAFE ----------------
         binding.btnAdd.setOnClickListener { view ->
             cafe.name = binding.cafeName.text.toString()
             cafe.favouriteMenuItem = binding.favouriteItem.text.toString()
             cafe.location = binding.locationText.text.toString()
             cafe.rating = binding.ratingBar.rating.toInt()
+            cafe.returning = binding.returningSwitch.isChecked
 
-            if (cafe.name.isNotEmpty()) {
-                if (intent.hasExtra("cafe_edit")) app.cafes.update(cafe.copy())
-                else app.cafes.create(cafe.copy())
-
+            if (cafe.name.isNotBlank()) {
+                if (intent.hasExtra("cafe_edit")) {
+                    app.cafes.update(cafe.copy())
+                } else {
+                    app.cafes.create(cafe.copy())
+                }
                 setResult(RESULT_OK)
                 finish()
             } else {
@@ -75,11 +80,12 @@ class CafeActivity : AppCompatActivity() {
             }
         }
 
+        // ---------------- IMAGE ----------------
         binding.chooseImage.setOnClickListener {
             showImageSourceDialog()
         }
 
-        // open map on location button click
+        // ---------------- LOCATION ----------------
         binding.setLocationBtn.setOnClickListener {
             val intent = Intent(this, LocationActivity::class.java)
             mapIntentLauncher.launch(intent)
@@ -90,7 +96,8 @@ class CafeActivity : AppCompatActivity() {
         registerMapCallback()
     }
 
-    // ask if the user wants to choose from gallery or take a photo
+    // ---------------- IMAGE PICKER ----------------
+
     private fun showImageSourceDialog() {
         val options = arrayOf("Take Photo", "Choose from Gallery")
 
@@ -105,10 +112,10 @@ class CafeActivity : AppCompatActivity() {
             .show()
     }
 
-    // choosing from gallery functionality
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            type = "image/*"
+        }
         galleryLauncher.launch(intent)
     }
 
@@ -116,23 +123,17 @@ class CafeActivity : AppCompatActivity() {
         galleryLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                    val uri = result.data!!.data
-                    if (uri != null) {
-                        cafe.image = uri.toString()
-                        binding.cafeImage.setImageURI(uri)
+                    result.data!!.data?.let {
+                        cafe.image = it.toString()
+                        binding.cafeImage.setImageURI(it)
                         binding.chooseImage.text = getString(R.string.change_image)
                     }
                 }
             }
     }
 
-    // camera functionality
     private fun openCamera() {
-        val photoFile = File.createTempFile(
-            "cafe_image_",
-            ".jpg",
-            cacheDir
-        )
+        val photoFile = File.createTempFile("cafe_image_", ".jpg", cacheDir)
 
         imageUri = FileProvider.getUriForFile(
             this,
@@ -140,8 +141,9 @@ class CafeActivity : AppCompatActivity() {
             photoFile
         )
 
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+            putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        }
         cameraLauncher.launch(intent)
     }
 
@@ -156,16 +158,21 @@ class CafeActivity : AppCompatActivity() {
             }
     }
 
-    // receive location from map
+    // ---------------- LOCATION RESULT ----------------
+
     private fun registerMapCallback() {
         mapIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                    val locationName = result.data!!.getStringExtra("location_name")
-                    if (!locationName.isNullOrBlank()) {
-                        cafe.location = locationName
-                        binding.locationText.setText(locationName)
-                    }
+
+                    val locationName =
+                        result.data!!.getStringExtra("location_name") ?: return@registerForActivityResult
+
+                    cafe.location = locationName
+                    cafe.lat = result.data!!.getDoubleExtra("lat", 0.0)
+                    cafe.lng = result.data!!.getDoubleExtra("lng", 0.0)
+
+                    binding.locationText.setText(locationName)
                 }
             }
     }
