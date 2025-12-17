@@ -9,7 +9,6 @@ import org.wit.placemark.main.MainApp
 import org.wit.placemark.main.SessionManager
 import org.wit.placemark.models.UserModel
 
-private val ActivityRegisterBinding.btnRegister: Any
 
 class RegisterActivity : AppCompatActivity() {
 
