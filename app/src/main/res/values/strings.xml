@@ -6,7 +6,9 @@
     <string name="cafe_name_hint">Café Name</string>
     <string name="favourite_item_hint">Favourite Menu Item</string>
     <string name="location_hint">Location</string>
+    <string name="button_location">Set Location</string>
     <string name="choose_image">Choose Image</string>
+    <string name="returning_or_no">Returning?</string>
     <string name="save_cafe">Save Café</string>
 
     <!-- Validation -->
@@ -19,8 +21,12 @@
     <string name="menu_addCafe">Add Café</string>
     <string name="menu_cancelCafe">Cancel</string>
     <string name="menu_deleteCafe">Delete Café</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- Card action (for delete button on each café card) -->
     <string name="delete_cafe">Delete Café</string>
     <string name="change_image">Change Image</string>
+    <string name="google_maps_key" value="AIzaSyA7CtM52Mok1l4KmmuT4_Dqz2BQdx0YQ-0" />
+    <string name="title_activity_cafe_map">CafeMapActivity</string>
 </resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cream_background"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <!-- Title -->
+    <TextView
+        android:text="Create Your Account"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="@color/coffee_brown"
+        android:layout_marginBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- Email -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        app:boxStrokeColor="@color/coffee_brown">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerEmail"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Password -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:layout_marginTop="12dp"
+        app:boxStrokeColor="@color/coffee_brown">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerPassword"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Register Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textColor="@color/white"
+        android:layout_marginTop="24dp"
+        app:backgroundTint="@color/coffee_brown"
+        app:cornerRadius="12dp"/>
+
+    <!-- Back to Login -->
+    <TextView
+        android:id="@+id/goLogin"
+        android:text="Already have an account? Login"
+        android:textColor="@color/latte_brown"
+        android:layout_marginTop="16dp"
+        android:textSize="14sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

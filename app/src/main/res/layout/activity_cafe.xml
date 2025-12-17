@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/coffee_brown"
+        app:title="Add Café"
         app:titleTextColor="@color/white"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:navigationIconTint="@color/white"
-        app:title="Add Café" />
+        app:navigationIconTint="@color/white" />
 
     <!-- Scrollable form -->
     <ScrollView
@@ -49,6 +49,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:hint="Favourite Menu Item"
                 app:boxStrokeColor="@color/latte_brown"
                 app:hintTextColor="@color/cardTextSecondary">
@@ -61,37 +62,43 @@
                     android:textColorHint="@color/cardTextSecondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Location -->
+            <!-- Location Field (auto-populated) -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Location"
+                android:hint="@string/location_hint"
                 app:boxStrokeColor="@color/latte_brown"
                 app:hintTextColor="@color/cardTextSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/location"
+                    android:id="@+id/locationText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/cardTextPrimary"
-                    android:textColorHint="@color/cardTextSecondary" />
+                    android:textColorHint="@color/cardTextSecondary"
+                    android:focusable="false"
+                    android:clickable="false" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Set Location Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/setLocationBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Set Location"
+                app:backgroundTint="@color/latte_brown"
+                app:icon="@drawable/ic_location"
+                app:iconGravity="textStart"
+                app:cornerRadius="12dp" />
 
             <!-- Rating -->
             <LinearLayout
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingTop="12dp"
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="Rating:"
-                    android:textColor="@color/cardTextPrimary"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
 
                 <RatingBar
                     android:id="@+id/ratingBar"
@@ -99,15 +106,21 @@
                     android:stepSize="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:isIndicator="false"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:scaleX="1.4"
-                    android:scaleY="1.4"
                     android:progressTint="@color/coffee_brown"
                     android:secondaryProgressTint="@color/latte_brown"
-                    android:progressBackgroundTint="@color/gray" />
+                    android:progressBackgroundTint="@color/gray"
+                    android:scaleX="1.4"
+                    android:scaleY="1.4" />
             </LinearLayout>
+
+            <!-- Returning Switch -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/returningSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Worth returning?"
+                android:checked="false" />
 
             <!-- Image Preview -->
             <ImageView
@@ -123,25 +136,25 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/chooseImage"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:text="@string/choose_image"
-                app:icon="@drawable/ic_photo"
-                app:iconPadding="8dp"
-                app:iconGravity="textStart"
-                android:textColor="@color/coffee_brown"
-                app:strokeColor="@color/coffee_brown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp" />
+                android:layout_marginTop="12dp"
+                android:text="@string/choose_image"
+                android:textColor="@color/coffee_brown"
+                app:strokeColor="@color/coffee_brown"
+                app:icon="@drawable/ic_photo"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp" />
 
             <!-- Save Café Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAdd"
-                android:text="@string/save_cafe"
-                android:textColor="@color/white"
-                app:backgroundTint="@color/coffee_brown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:text="@string/save_cafe"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/coffee_brown"
                 app:cornerRadius="12dp" />
 
         </LinearLayout>
