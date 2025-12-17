@@ -25,4 +25,5 @@
     <!-- Card action (for delete button on each café card) -->
     <string name="delete_cafe">Delete Café</string>
     <string name="change_image">Change Image</string>
+    <string name="google_maps_key" value="AIzaSyA7CtM52Mok1l4KmmuT4_Dqz2BQdx0YQ-0" />
 </resources>

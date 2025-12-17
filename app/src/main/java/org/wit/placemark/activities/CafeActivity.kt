@@ -28,6 +28,7 @@ class CafeActivity : AppCompatActivity() {
 
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
 
     private var imageUri: Uri? = null
     private var cafe = CafeModel()
@@ -47,7 +48,7 @@ class CafeActivity : AppCompatActivity() {
             cafe = intent.extras?.getParcelable("cafe_edit")!!
             binding.cafeName.setText(cafe.name)
             binding.favouriteItem.setText(cafe.favouriteMenuItem)
-            binding.placemarkLocation.text = cafe.location
+            binding.locationText.setText(cafe.location)
             binding.ratingBar.rating = cafe.rating.toFloat()
 
             if (cafe.image.isNotEmpty()) {
@@ -60,7 +61,7 @@ class CafeActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener { view ->
             cafe.name = binding.cafeName.text.toString()
             cafe.favouriteMenuItem = binding.favouriteItem.text.toString()
-            cafe.location = binding.placemarkLocation.text.toString()
+            cafe.location = binding.locationText.text.toString()
             cafe.rating = binding.ratingBar.rating.toInt()
 
             if (cafe.name.isNotEmpty()) {
@@ -78,11 +79,18 @@ class CafeActivity : AppCompatActivity() {
             showImageSourceDialog()
         }
 
+        // open map on location button click
+        binding.setLocationBtn.setOnClickListener {
+            val intent = Intent(this, LocationActivity::class.java)
+            mapIntentLauncher.launch(intent)
+        }
+
         registerGalleryCallback()
         registerCameraCallback()
+        registerMapCallback()
     }
 
-   // ask if the user wants to choose from gallery or take a photo
+    // ask if the user wants to choose from gallery or take a photo
     private fun showImageSourceDialog() {
         val options = arrayOf("Take Photo", "Choose from Gallery")
 
@@ -97,7 +105,7 @@ class CafeActivity : AppCompatActivity() {
             .show()
     }
 
-   // choosing from gallery  functionality
+    // choosing from gallery functionality
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -117,6 +125,7 @@ class CafeActivity : AppCompatActivity() {
                 }
             }
     }
+
     // camera functionality
     private fun openCamera() {
         val photoFile = File.createTempFile(
@@ -143,6 +152,20 @@ class CafeActivity : AppCompatActivity() {
                     cafe.image = imageUri.toString()
                     binding.cafeImage.setImageURI(imageUri)
                     binding.chooseImage.text = getString(R.string.change_image)
+                }
+            }
+    }
+
+    // receive location from map
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val locationName = result.data!!.getStringExtra("location_name")
+                    if (!locationName.isNullOrBlank()) {
+                        cafe.location = locationName
+                        binding.locationText.setText(locationName)
+                    }
                 }
             }
     }
