@@ -139,6 +139,25 @@ class CafeListActivity : AppCompatActivity(), CafeListener {
         startActivity(intent)
     }
 
+    private fun confirmDeleteAll() {
+        if (app.cafes.findAll().isEmpty()) {
+            Snackbar.make(binding.root, "No cafés to delete", Snackbar.LENGTH_SHORT).show()
+            return
+        }
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Delete All Cafés")
+            .setMessage("This will permanently delete ALL cafés. Are you sure?")
+            .setPositiveButton("Delete All") { _, _ ->
+                app.cafes.findAll().toList().forEach {
+                    app.cafes.delete(it)
+                }
+                adapter.updateList(emptyList())
+                Snackbar.make(binding.root, "All cafés deleted", Snackbar.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
     override fun onCafeDeleteClick(cafe: CafeModel) {
         MaterialAlertDialogBuilder(this)
             .setTitle("Delete Café")
